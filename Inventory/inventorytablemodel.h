@@ -2,6 +2,8 @@
 
 #include <QAbstractTableModel>
 
+#include "inventory.h"
+
 class InventoryTableModel : public QAbstractTableModel
 {
     Q_OBJECT

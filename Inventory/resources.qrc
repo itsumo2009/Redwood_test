@@ -3,5 +3,6 @@
         <file>apple.png</file>
         <file>apple_64px.png</file>
         <file>apple_256px.png</file>
+        <file>apple.wav</file>
     </qresource>
 </RCC>

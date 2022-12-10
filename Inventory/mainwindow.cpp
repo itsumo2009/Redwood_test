@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include "inventorytablemodel.h"
+
 #include <QMouseEvent>
 #include <QDrag>
 #include <QMimeData>
@@ -10,9 +12,10 @@ MainWindow::MainWindow(QWidget *parent)
     , _ui(new Ui::MainWindow)
 {
     _ui->setupUi(this);
-    _ui->tableWidget->setAcceptDrops(true);
-    _ui->tableWidget->installEventFilter(this);
-    _ui->tableWidget->setAcceptDrops(true);
+    auto model = new InventoryTableModel();
+    model->setParent(this);
+    _ui->tableView->setModel(model);
+    _ui->tableView->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
@@ -22,7 +25,7 @@ MainWindow::~MainWindow()
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
-    if (watched == _ui->tableWidget)
+    if (watched == _ui->tableView)
     {
         if (event->type() == QEvent::Type::DragEnter)
         {
@@ -33,8 +36,13 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
         {
             auto dropEvent = dynamic_cast<QDropEvent*>(event);
             QPoint pos = dropEvent->pos();
-            auto item = _ui->tableWidget->itemAt(pos);
-            item->setIcon(QIcon("://apple_64px.png"));
+            auto index = _ui->tableView->indexAt(pos);
+            if (index.isValid())
+            {
+
+            }
+            //auto item = _ui->tableWidget->itemAt(pos);
+            //item->setIcon(QIcon("://apple_64px.png"));
             dropEvent->acceptProposedAction();
         }
     }

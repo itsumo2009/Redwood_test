@@ -43,4 +43,4 @@ else()
     endif()
 endif()
 
-target_link_libraries(Inventory PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Inventory PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
