@@ -14,6 +14,11 @@ Inventory::Cell& Inventory::cell(int i, int j)
 
 void Inventory::moveItem(int sourceI, int sourceJ, int destinationI, int destinationJ)
 {
+    if (sourceI == destinationI && sourceJ == destinationJ)
+    {
+        return;
+    }
+
     auto& sourceCell = _cells[sourceI][sourceJ];
     auto& destCell = _cells[destinationI][destinationJ];
     if (!sourceCell.item.data())

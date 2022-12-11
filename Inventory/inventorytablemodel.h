@@ -2,6 +2,7 @@
 
 #include <QAbstractTableModel>
 
+#include "database.h"
 #include "inventory.h"
 
 class InventoryTableModel : public QAbstractTableModel
@@ -9,6 +10,9 @@ class InventoryTableModel : public QAbstractTableModel
     Q_OBJECT
 public:
     InventoryTableModel();
+
+    void loadFromDb();
+    void saveToDb();
 
     void useItem(QModelIndex index);
     void addItem(QModelIndex index, const Item& item);
@@ -27,4 +31,5 @@ private:
 
 private:
     Inventory _inventory;
+    Database _db;
 };

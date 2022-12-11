@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include "itemdelegate.h"
+
 #include <QMouseEvent>
 #include <QDrag>
 #include <QMimeData>
@@ -11,9 +13,11 @@ MainWindow::MainWindow(QWidget *parent)
     , _model(new InventoryTableModel())
 {
     _ui->setupUi(this);
+    _model->loadFromDb();
     _ui->tableView->setModel(_model.data());
     _ui->tableView->installEventFilter(this);
     _ui->tableView->setAcceptDrops(true);
+    _ui->tableView->setItemDelegate(new ItemDelegate());
 
     connect(_ui->tableView, &QTableView::customContextMenuRequested, [this](QPoint pos)
     {
@@ -71,6 +75,7 @@ void MainWindow::on_pushButtonNewGame_clicked()
 
 void MainWindow::on_pushButtonExit_clicked()
 {
+    _model->saveToDb();
     close();
 }
 

@@ -11,8 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia Sql REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia Sql REQUIRED)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -24,6 +24,10 @@ set(PROJECT_SOURCES
         inventory.cpp
         inventory.h
         item.h
+        itemdelegate.h
+        itemdelegate.cpp
+        database.h
+        database.cpp
         resources.qrc
 )
 
@@ -43,4 +47,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(Inventory PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
+target_link_libraries(Inventory PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia Qt${QT_VERSION_MAJOR}::Sql)
+add_custom_command(TARGET Inventory POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/main.sqlite ${CMAKE_BINARY_DIR}/main.sqlite
+)

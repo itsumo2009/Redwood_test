@@ -8,6 +8,18 @@ InventoryTableModel::InventoryTableModel()
 
 }
 
+void InventoryTableModel::loadFromDb()
+{
+    beginResetModel();
+    _db.loadInventory(_inventory);
+    endResetModel();
+}
+
+void InventoryTableModel::saveToDb()
+{
+    _db.saveInventory(_inventory);
+}
+
 void InventoryTableModel::useItem(QModelIndex index)
 {
     _inventory.useItem(index.column(), index.row());

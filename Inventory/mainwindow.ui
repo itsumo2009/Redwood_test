@@ -139,10 +139,10 @@
            <bool>false</bool>
           </attribute>
           <attribute name="horizontalHeaderMinimumSectionSize">
-           <number>256</number>
+           <number>192</number>
           </attribute>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>256</number>
+           <number>192</number>
           </attribute>
           <attribute name="horizontalHeaderHighlightSections">
            <bool>false</bool>
@@ -151,10 +151,10 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderMinimumSectionSize">
-           <number>256</number>
+           <number>192</number>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>256</number>
+           <number>192</number>
           </attribute>
           <attribute name="verticalHeaderHighlightSections">
            <bool>false</bool>
