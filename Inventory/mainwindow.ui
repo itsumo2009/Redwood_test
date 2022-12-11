@@ -114,6 +114,9 @@
         </item>
         <item row="1" column="0">
          <widget class="QTableView" name="tableView">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
           <property name="acceptDrops">
            <bool>true</bool>
           </property>
@@ -126,14 +129,20 @@
           <property name="dragDropMode">
            <enum>QAbstractItemView::DragDrop</enum>
           </property>
+          <property name="defaultDropAction">
+           <enum>Qt::MoveAction</enum>
+          </property>
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
           <attribute name="horizontalHeaderVisible">
            <bool>false</bool>
           </attribute>
           <attribute name="horizontalHeaderMinimumSectionSize">
-           <number>64</number>
+           <number>256</number>
           </attribute>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>64</number>
+           <number>256</number>
           </attribute>
           <attribute name="horizontalHeaderHighlightSections">
            <bool>false</bool>
@@ -142,12 +151,15 @@
            <bool>false</bool>
           </attribute>
           <attribute name="verticalHeaderMinimumSectionSize">
-           <number>64</number>
+           <number>256</number>
           </attribute>
           <attribute name="verticalHeaderDefaultSectionSize">
-           <number>64</number>
+           <number>256</number>
           </attribute>
           <attribute name="verticalHeaderHighlightSections">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="verticalHeaderShowSortIndicator" stdset="0">
            <bool>false</bool>
           </attribute>
          </widget>

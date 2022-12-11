@@ -18,6 +18,7 @@ public:
     const Cell& cell(int i, int j) const;
     Cell& cell(int i, int j);
 
+    void moveItem(int sourceI, int sourceJ, int destinationI, int destinationJ);
     void moveItem(int i, int j, const Item& item);
     void useItem(int i, int j);
 

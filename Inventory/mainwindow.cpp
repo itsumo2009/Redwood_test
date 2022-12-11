@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include "inventorytablemodel.h"
-
 #include <QMouseEvent>
 #include <QDrag>
 #include <QMimeData>
@@ -10,12 +8,21 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , _ui(new Ui::MainWindow)
+    , _model(new InventoryTableModel())
 {
     _ui->setupUi(this);
-    auto model = new InventoryTableModel();
-    model->setParent(this);
-    _ui->tableView->setModel(model);
+    _ui->tableView->setModel(_model.data());
     _ui->tableView->installEventFilter(this);
+    _ui->tableView->setAcceptDrops(true);
+
+    connect(_ui->tableView, &QTableView::customContextMenuRequested, [this](QPoint pos)
+    {
+        auto index = _ui->tableView->indexAt(pos);
+        if (index.isValid())
+        {
+            _model->useItem(index);
+        }
+    });
 }
 
 MainWindow::~MainWindow()
@@ -39,10 +46,18 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
             auto index = _ui->tableView->indexAt(pos);
             if (index.isValid())
             {
-
+                QByteArray array = dropEvent->mimeData()->data("application/inventory");
+                if (array.isEmpty())
+                {
+                    _model->addItem(index, Item{});
+                }
+                else
+                {
+                    auto column = array[0];
+                    auto row = array[1];
+                    _model->moveItem(column, row, index);
+                }
             }
-            //auto item = _ui->tableWidget->itemAt(pos);
-            //item->setIcon(QIcon("://apple_64px.png"));
             dropEvent->acceptProposedAction();
         }
     }
@@ -67,8 +82,8 @@ void MainWindow::on_pushButtonMainMenu_clicked()
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton
-        && _ui->label->geometry().contains(event->pos())) {
-
+        && _ui->label->geometry().contains(event->pos()))
+    {
         QDrag *drag = new QDrag(this);
         QMimeData *mimeData = new QMimeData;
 

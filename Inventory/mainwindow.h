@@ -1,7 +1,8 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
+
+#include "inventorytablemodel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -29,6 +30,5 @@ private slots:
 
 private:
     Ui::MainWindow *_ui;
-
+    QScopedPointer<InventoryTableModel> _model;
 };
-#endif // MAINWINDOW_H
