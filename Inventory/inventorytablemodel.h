@@ -9,13 +9,37 @@ class InventoryTableModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
+    ///
+    /// \brief InventoryTableModel Конструктор
+    ///
     InventoryTableModel();
 
+    ///
+    /// \brief loadFromDb Загружает инвентарь из БД
+    ///
     void loadFromDb();
+    ///
+    /// \brief saveToDb Сохраняет инвентарь в БД
+    ///
     void saveToDb();
 
+    ///
+    /// \brief useItem Использовать предмет
+    /// \param index Индекс ячейки
+    ///
     void useItem(QModelIndex index);
+    ///
+    /// \brief addItem Добавить предмет
+    /// \param index Индекс ячейкм
+    /// \param item Предмет
+    ///
     void addItem(QModelIndex index, const Item& item);
+    ///
+    /// \brief moveItem Переместить предмет
+    /// \param sourceColumn Исходная колонка
+    /// \param sourceRow Исходная строка
+    /// \param destinationIndex Индекс целевой ячейки
+    ///
     void moveItem(int sourceColumn, int sourceRow, QModelIndex destinationIndex);
 
     // QAbstractItemModel interface

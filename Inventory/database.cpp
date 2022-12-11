@@ -17,16 +17,16 @@ Database::Database()
 
 void Database::saveInventory(const Inventory &inventory)
 {
-    for (int i=0; i < 3; ++i)
-        for (int j=0; j < 3; ++j)
+    for (int i=0; i < inventory.size().width(); ++i)
+        for (int j=0; j < inventory.size().height(); ++j)
         {
             if (inventory.cell(i, j).item.data())
             {
                 QSqlQuery query(_db);
                 if (!query.exec(QString("UPDATE Inventory SET Type='apple',\"COUNT\" = %1 WHERE X = %2 AND Y = %3 ")
                         .arg(inventory.cell(i, j).count)
-                        .arg(j)
-                        .arg(i)))
+                        .arg(i)
+                        .arg(j)))
                 {
                     qDebug() << "Query has not be executed";
                 }
@@ -35,8 +35,8 @@ void Database::saveInventory(const Inventory &inventory)
             {
                 QSqlQuery query(_db);
                 if (!query.exec(QString("UPDATE Inventory SET Type=NULL,\"COUNT\" = 0 WHERE X = %1 AND Y = %2 ")
-                        .arg(j)
-                        .arg(i)))
+                        .arg(i)
+                        .arg(j)))
                 {
                     qDebug() << "Query has not be executed";
                 }
@@ -53,8 +53,8 @@ void Database::loadInventory(Inventory& inventory)
         return;
     }
 
-    for (int i=0; i < 3; ++i)
-        for (int j=0; j < 3; ++j)
+    for (int i=0; i < inventory.size().width(); ++i)
+        for (int j=0; j < inventory.size().height(); ++j)
         {
             inventory.cell(i, j).count = 0;
             inventory.cell(i, j).item.reset();
@@ -68,10 +68,10 @@ void Database::loadInventory(Inventory& inventory)
         if (!type.isEmpty())
         {
             auto count = query.record().field(3).value().toUInt();
-            if (type == "apple" && 0<=x && x <3 && 0<=y && y < 3)
+            if (type == "apple" && 0<=x && x <inventory.size().width() && 0<=y && y < inventory.size().height())
             {
-                inventory.cell(y, x).item.reset(new Item);
-                inventory.cell(y, x).count = count;
+                inventory.cell(x, y).item.reset(new Item);
+                inventory.cell(x, y).count = count;
             }
         }
 
